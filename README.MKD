@@ -38,7 +38,7 @@ A powerful and elegant autoclicker application for macOS with support for both m
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/autoclicker-macos.git
+   git clone https://github.com/BGexe/autoclicker.git
    cd autoclicker-macos
    ```
 
