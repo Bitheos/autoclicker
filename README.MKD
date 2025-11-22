@@ -1,0 +1,163 @@
+# 🖱️ AutoClicker for macOS
+
+A powerful and elegant autoclicker application for macOS with support for both mouse clicks and keyboard key presses. Built with Python and native macOS frameworks.
+
+![macOS](https://img.shields.io/badge/macOS-10.13+-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.7+-green.svg)
+![License](https://img.shields.io/badge/license-MIT-orange.svg)
+
+## ✨ Features
+
+### Mouse Mode
+- **Click Speed Control**: Configure clicks per second or per minute
+- **Button Selection**: Choose between left, middle, or right mouse button
+- **Smart Click**: Option to pause clicking when mouse is moving
+- **Customizable Delays**: Set start delay and auto-stop timer
+- **Click at Current Position**: Clicks wherever your mouse cursor is located
+
+### Keyboard Mode
+- **Key Press Automation**: Automatically press any keyboard key
+- **Custom Key Selection**: Choose any key from your keyboard
+- **Same Speed Controls**: Use the same timing configurations as mouse mode
+
+### General Features
+- **Custom Hotkey**: Set your own hotkey combination to start/stop (default: F8)
+- **Menu Bar Integration**: Lives in your macOS menu bar for easy access
+- **Modern UI**: Beautiful gradient interface with dark theme
+- **Countdown Timer**: Visual feedback when starting with delay
+- **Status Indicators**: Real-time status updates with color coding
+
+## 📋 Requirements
+
+- macOS 10.13 (High Sierra) or later
+- Python 3.7 or higher
+- PyObjC framework
+- pynput library
+
+## 🚀 Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/autoclicker-macos.git
+   cd autoclicker-macos
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pip3 install pyobjc pyobjc-framework-Cocoa pyobjc-framework-Quartz pynput
+   ```
+
+3. **Grant accessibility permissions**
+   - Go to System Preferences → Security & Privacy → Privacy → Accessibility
+   - Add Terminal or your Python interpreter to the allowed apps
+   - This is required for the app to simulate clicks and key presses
+
+## 💻 Usage
+
+1. **Run the application**
+   ```bash
+   python3 autoclicker.py
+   ```
+
+2. **Configure your settings**
+   - Click the 🖱️ AutoClicker icon in the menu bar
+   - Set your desired click/key press speed
+   - Choose between Mouse Mode or Keyboard Mode
+   - Configure optional delays and smart options
+
+3. **Start clicking/pressing**
+   - Click the "Start" button or press your hotkey (default: F8)
+   - Press the hotkey again to stop
+
+## ⚙️ Configuration Options
+
+### Speed Settings
+- **Clicks/Presses per unit**: Number of actions (1-1000+)
+- **Time unit**: Choose between "second" or "minute"
+
+### Delays
+- **Start after**: Wait X seconds before starting (0 = immediate)
+- **Stop after**: Automatically stop after X seconds (0 = infinite)
+
+### Mouse Mode Options
+- **Button type**: Left, Middle, or Right mouse button
+- **Smart click**: Only click when mouse hasn't moved for X seconds
+
+### Keyboard Mode Options
+- **Key selection**: Click "Select key" and press any key on your keyboard
+
+### Hotkey
+- Click the hotkey button and press your desired key combination
+- Supports modifier keys (Cmd, Ctrl, Alt, Shift) + any key
+
+## 🎮 Controls
+
+- **F8** (default): Start/Stop the autoclicker
+- **Custom hotkey**: Set your own combination in the interface
+- **Start/Stop button**: Manual control from the interface
+- **❌ button**: Quit the application
+
+## 🔒 Permissions
+
+This app requires the following macOS permissions:
+
+1. **Accessibility**: To simulate mouse clicks and keyboard presses
+2. **Input Monitoring**: To detect hotkey presses
+
+You'll be prompted to grant these permissions on first run.
+
+## 🛠️ Troubleshooting
+
+### App doesn't click/press keys
+- Make sure you've granted Accessibility permissions
+- Restart the app after granting permissions
+
+### Hotkey doesn't work
+- Check that Input Monitoring permission is granted
+- Try a different hotkey combination
+- Ensure no other app is using the same hotkey
+
+### App doesn't appear in menu bar
+- Check if the app is running in Terminal
+- Look for error messages in the console
+- Try restarting the app
+
+## 📝 Technical Details
+
+### Built With
+- **PyObjC**: Python-Objective-C bridge for native macOS integration
+- **Cocoa Framework**: For UI components and menu bar integration
+- **Quartz**: For low-level mouse event simulation
+- **pynput**: For keyboard event listening and simulation
+
+### Architecture
+- Single-threaded event loop using NSRunLoop
+- Native NSPopover for the interface
+- CGEvent API for mouse simulation
+- Keyboard listener running in daemon thread
+
+## ⚠️ Disclaimer
+
+This tool is intended for legitimate automation purposes only. Use responsibly and in accordance with the terms of service of any applications or games you use it with. The developer is not responsible for any misuse or violations of third-party terms of service.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+Created with ❤️ for the macOS community
+
+## 🙏 Acknowledgments
+
+- PyObjC community for excellent documentation
+- macOS developers for the robust frameworks
+- All contributors and users
+
+---
+
+**Note**: This application requires macOS and will not work on Windows or Linux. For cross-platform alternatives, consider using other tools.
