@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2024 BGexe AutoClicker macOS
+Copyright (c) 2025 Bitheos
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +22,38 @@ SOFTWARE.
 
 ---
 
-ADDITIONAL DISCLAIMER:
+## Additional Terms
 
-This software is intended for legitimate automation purposes only. Users are 
-solely responsible for ensuring their use of this software complies with:
+### Attribution (Optional but Appreciated)
+While not required by the MIT License, if you use or modify this software for 
+your own projects, a link back to the original repository would be appreciated.
 
-1. All applicable local, state, national, and international laws
-2. Terms of Service of any applications, games, or services used with this software
-3. Ethical guidelines and best practices for automation
+### No Warranty
+This software is provided as-is. The authors are not responsible for any issues,
+damages, or losses that may occur from using this software.
 
-The copyright holder and contributors of this software:
-- Do not endorse or encourage any violation of third-party terms of service
-- Are not responsible for any misuse, abuse, or violations by users
-- Provide this software "as is" without any guarantees or warranties
-- Are not liable for any consequences resulting from the use of this software
+### Usage Examples
 
-Users accept full responsibility for their actions when using this software.
+**You CAN:**
+- Use this commercially
+- Modify and distribute
+- Use privately
+- Sublicense
+- Integrate into your own projects
+- Remove or change attribution
+
+**You MUST:**
+- Include the original MIT license in copies
+- Include the copyright notice
+
+**You CANNOT:**
+- Hold the author liable
+- Claim you wrote the original software
+- Use the author's name to promote derivatives without permission
+
+---
+
+## Contribution License Agreement
+
+By contributing to this project, you agree that your contributions will be 
+licensed under the same MIT License that covers the project.

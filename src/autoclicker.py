@@ -1,11 +1,13 @@
 import objc
 import time
 import math
+import os
+import sys
 from Cocoa import (
     NSApplication, NSObject, NSStatusBar, NSVariableStatusItemLength,
     NSPopover, NSView, NSButton, NSComboBox, NSTextField, NSRect, NSSize,
     NSViewController, NSTimer, NSColor, NSGradient, NSFont, NSBezelStyle,
-    NSSegmentedControl
+    NSSegmentedControl, NSImage
 )
 from PyObjCTools import AppHelper
 from Quartz import (
@@ -17,6 +19,18 @@ from Quartz import (
     kCGMouseButtonLeft, kCGMouseButtonRight
 )
 from pynput import keyboard
+from ApplicationServices import AXIsProcessTrusted 
+
+# --- FUNCIÓN PARA RUTAS DE RECURSOS ---
+def resource_path(relative_path):
+    """ Obtiene la ruta absoluta al recurso, funciona para dev y para PyInstaller """
+    try:
+        # PyInstaller crea una carpeta temporal en _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 # --- DELEGATE PARA VALIDAR NÚMEROS ---
 class NumberOnlyDelegate(NSObject):
@@ -61,6 +75,12 @@ class GradientView(NSView):
 
 class AutoClickerController(NSObject):
     def applicationDidFinishLaunching_(self, notification):
+        print("Iniciando aplicación...") 
+        
+        # --- VERIFICACIÓN DE PERMISOS (AGREGAR ESTO) ---
+        is_trusted = AXIsProcessTrusted()
+        print(f"Permisos de accesibilidad: {is_trusted}")
+        
         self.running = False
         self.is_terminating = False
         
@@ -90,7 +110,26 @@ class AutoClickerController(NSObject):
         # --- UI SETUP ---
         status_bar = NSStatusBar.systemStatusBar()
         self.status_item = status_bar.statusItemWithLength_(NSVariableStatusItemLength)
-        self.status_item.button().setTitle_("🖱️ AutoClicker")
+        
+        # --- CARGAR ICONO ---
+        # USAR LA NUEVA FUNCIÓN AQUÍ
+        icon_path = resource_path("icon.png") 
+        image = NSImage.alloc().initByReferencingFile_(icon_path)
+        
+        if image.isValid():
+            image.setSize_(NSSize(18, 18))
+            image.setTemplate_(True)
+            self.status_item.button().setImage_(image)
+            
+            # AGREGAR ESTO: Si no hay permisos, poner un aviso al lado del icono
+            if not is_trusted:
+                self.status_item.button().setTitle_("⚠️ Sin Permisos")
+            else:
+                self.status_item.button().setTitle_("") 
+        else:
+            # Fallback por si no encuentra la imagen
+            self.status_item.button().setTitle_("🖱️ AutoClicker")
+
         self.status_item.button().setAction_("togglePopover:")
         self.status_item.button().setTarget_(self)
 
@@ -600,7 +639,15 @@ class AutoClickerController(NSObject):
             try: self.keyboard_listener.stop()
             except Exception: pass
 
+def setup_logging():
+    """Redirige print y errores a un archivo log en Documentos"""
+    log_path = os.path.expanduser("~/Documents/autoclicker_log.txt")
+    sys.stdout = open(log_path, "w")
+    sys.stderr = sys.stdout
+    print(f"Log iniciado: {time.ctime()}")
+
 if __name__ == "__main__":
+    setup_logging()
     app = NSApplication.sharedApplication()
     delegate = AutoClickerController.alloc().init()
     app.setDelegate_(delegate)

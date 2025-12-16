@@ -1,4 +1,4 @@
-# 🖱️ AutoClicker for macOS
+# AutoClicker for macOS
 
 A powerful and elegant autoclicker application for macOS with support for both mouse clicks and keyboard key presses. Built with Python and native macOS frameworks.
 
@@ -38,8 +38,13 @@ A powerful and elegant autoclicker application for macOS with support for both m
 
 1. **Clone the repository**
    ```bash
+<<<<<<< HEAD
    git clone https://github.com/BGexe/autoclicker.git
    cd autoclicker-macos
+=======
+   git clone https://github.com/Bitheos/autoclicker.git
+   cd autoclicker
+>>>>>>> ee4017f (Now it has icon)
    ```
 
 2. **Install dependencies**
@@ -73,7 +78,7 @@ A powerful and elegant autoclicker application for macOS with support for both m
 
 ### Speed Settings
 - **Clicks/Presses per unit**: Number of actions (1-1000+)
-- **Time unit**: Choose between "second" or "minute"
+- **Time unit**: Choose between "seconds" or "minutes"
 
 ### Delays
 - **Start after**: Wait X seconds before starting (0 = immediate)
