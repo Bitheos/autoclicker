@@ -652,3 +652,4 @@ if __name__ == "__main__":
     delegate = AutoClickerController.alloc().init()
     app.setDelegate_(delegate)
     AppHelper.runEventLoop()
+    
