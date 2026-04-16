@@ -2,167 +2,168 @@
 
 A powerful and elegant autoclicker application for macOS with support for both mouse clicks and keyboard key presses. Built with Python and native macOS frameworks.
 
-![macOS](https://img.shields.io/badge/macOS-10.13+-blue.svg)
-![Python](https://img.shields.io/badge/Python-3.7+-green.svg)
+![macOS](https://img.shields.io/badge/macOS-10.15+-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.9+-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-orange.svg)
 
-## ✨ Features
+## Features
 
 ### Mouse Mode
 - **Click Speed Control**: Configure clicks per second or per minute
 - **Button Selection**: Choose between left, middle, or right mouse button
-- **Smart Click**: Option to pause clicking when mouse is moving
-- **Customizable Delays**: Set start delay and auto-stop timer
+- **Smart Click**: Option to pause clicking when the mouse is moving
+- **Customizable Delays**: Set a start delay and an auto-stop timer
 - **Click at Current Position**: Clicks wherever your mouse cursor is located
 
 ### Keyboard Mode
 - **Key Press Automation**: Automatically press any keyboard key
-- **Custom Key Selection**: Choose any key from your keyboard
-- **Same Speed Controls**: Use the same timing configurations as mouse mode
+- **Custom Key Selection**: Pick any key by pressing it directly in the interface
+- **Same Speed Controls**: Uses the same timing configuration as mouse mode
 
-### General Features
-- **Custom Hotkey**: Set your own hotkey combination to start/stop (default: F8)
-- **Menu Bar Integration**: Lives in your macOS menu bar for easy access
-- **Modern UI**: Beautiful gradient interface with dark theme
-- **Countdown Timer**: Visual feedback when starting with delay
-- **Status Indicators**: Real-time status updates with color coding
+### General
+- **Custom Hotkey**: Set any key combination to start/stop (default: F8)
+- **Menu Bar Integration**: Lives in the macOS menu bar — no Dock icon
+- **Dark Gradient UI**: Native-looking interface built with Cocoa
+- **Countdown Timer**: Visual feedback when starting with a delay
+- **Color-coded Status**: Green (ready), yellow (countdown), red (running), orange (paused)
+- **Sleep/Wake Support**: Keyboard listener automatically restarts after system sleep
 
-## 📋 Requirements
+## Requirements
 
-- macOS 10.13 (High Sierra) or later
-- Python 3.7 or higher
+- macOS 10.15 (Catalina) or later
+- Python 3.9 or higher
 - PyObjC framework
 - pynput library
 
-## 🚀 Installation
+## Installation
+
+### Running from source
 
 1. **Clone the repository**
    ```bash
-<<<<<<< HEAD
-   git clone https://github.com/BGexe/autoclicker.git
-   cd autoclicker-macos
-=======
    git clone https://github.com/Bitheos/autoclicker.git
    cd autoclicker
->>>>>>> ee4017f (Now it has icon)
    ```
 
 2. **Install dependencies**
    ```bash
-   pip3 install pyobjc pyobjc-framework-Cocoa pyobjc-framework-Quartz pynput
+   pip3 install pyobjc pynput
    ```
 
-3. **Grant accessibility permissions**
-   - Go to System Preferences → Security & Privacy → Privacy → Accessibility
-   - Add Terminal or your Python interpreter to the allowed apps
-   - This is required for the app to simulate clicks and key presses
-
-## 💻 Usage
-
-1. **Run the application**
+3. **Run the app**
    ```bash
-   python3 autoclicker.py
+   python3 src/autoclicker.py
    ```
 
-2. **Configure your settings**
-   - Click the 🖱️ AutoClicker icon in the menu bar
-   - Set your desired click/key press speed
-   - Choose between Mouse Mode or Keyboard Mode
-   - Configure optional delays and smart options
+### Building a standalone .app (no Python required)
 
-3. **Start clicking/pressing**
-   - Click the "Start" button or press your hotkey (default: F8)
-   - Press the hotkey again to stop
+Use the included build script — it compiles, signs, and cleans up permissions automatically:
 
-## ⚙️ Configuration Options
+```bash
+chmod +x build.sh
+./build.sh
+```
 
-### Speed Settings
-- **Clicks/Presses per unit**: Number of actions (1-1000+)
-- **Time unit**: Choose between "seconds" or "minutes"
+The script will:
+- Verify and install missing dependencies (PyInstaller, pyobjc, pynput)
+- Compile with PyInstaller in `onedir` mode (required for Python 3.13 compatibility)
+- Sign the app with an ad-hoc identity (no Apple Developer account needed)
+- Remove the macOS quarantine flag
+- Clean the Accessibility entry from the TCC database so permissions are requested fresh
+- Optionally copy the app to `/Applications`
+
+> **Note:** The app is not notarized. If macOS blocks it on first open, right-click → Open → Open anyway, or run:
+> ```bash
+> sudo xattr -rd com.apple.quarantine /Applications/Autoclicker.app
+> ```
+
+## Permissions
+
+On first launch, macOS will automatically show the Accessibility permission dialog. Once you grant it:
+
+- The **"Grant Accessibility permissions"** button disappears on its own
+- The status label turns green and shows **Ready**
+- The app is fully functional — no restart needed
+
+The app detects the permission change in the background (polling every 2 seconds) without requiring any manual action beyond clicking Allow in System Preferences.
+
+> If you rebuild the app, the build script clears the old TCC entry so permissions are always requested cleanly, avoiding the macOS bug where re-signed binaries silently lose their previously granted permissions.
+
+Required permissions:
+
+| Permission | Purpose |
+|---|---|
+| Accessibility | Simulate mouse clicks and keyboard presses |
+| Input Monitoring | Detect global hotkey presses |
+
+## Usage
+
+1. Click the menu bar icon to open the panel
+2. Configure your settings (speed, mode, delays, hotkey)
+3. Press **Start** or your hotkey (default: **F8**) to begin
+4. Press the hotkey again or click **Stop** to end the session
+
+## Configuration
+
+### Speed
+- **Clicks/presses**: How many actions to perform (default: 20)
+- **Per**: `second` or `minute`
 
 ### Delays
-- **Start after**: Wait X seconds before starting (0 = immediate)
-- **Stop after**: Automatically stop after X seconds (0 = infinite)
-
-### Mouse Mode Options
-- **Button type**: Left, Middle, or Right mouse button
-- **Smart click**: Only click when mouse hasn't moved for X seconds
-
-### Keyboard Mode Options
-- **Key selection**: Click "Select key" and press any key on your keyboard
+- **Start after**: Seconds to wait before the first action (0 = immediate)
+- **Stop after**: Automatically stop after this many seconds (0 = run indefinitely)
 
 ### Hotkey
-- Click the hotkey button and press your desired key combination
-- Supports modifier keys (Cmd, Ctrl, Alt, Shift) + any key
+Click the hotkey button and press any key or combination (e.g. `F8`, `Ctrl+Shift+A`). Modifier keys alone are not accepted as a hotkey — at least one non-modifier key is required.
 
-## 🎮 Controls
+### Mouse Mode
+- **Button**: Left, middle, or right
+- **Smart click**: Pause automatically if the mouse has moved within the last N seconds
 
-- **F8** (default): Start/Stop the autoclicker
-- **Custom hotkey**: Set your own combination in the interface
-- **Start/Stop button**: Manual control from the interface
-- **❌ button**: Quit the application
+### Keyboard Mode
+Click **Select key** and press the key you want to automate. The selected key is shown in the interface.
 
-## 🔒 Permissions
+## Controls
 
-This app requires the following macOS permissions:
+| Action | How |
+|---|---|
+| Start / Stop | Hotkey (default F8) or Start/Stop button |
+| Change hotkey | Click the hotkey button, press new keys |
+| Select keyboard key | Click "Select key", press desired key |
+| Quit | Click **Salir** in the panel |
 
-1. **Accessibility**: To simulate mouse clicks and keyboard presses
-2. **Input Monitoring**: To detect hotkey presses
+## Troubleshooting
 
-You'll be prompted to grant these permissions on first run.
+**App doesn't click or press keys**
+- Grant Accessibility permission in System Preferences → Privacy & Security → Accessibility
+- If the permission keeps disappearing after a rebuild, run `build.sh` again — it clears the stale TCC entry automatically
 
-## 🛠️ Troubleshooting
-
-### App doesn't click/press keys
-- Make sure you've granted Accessibility permissions
-- Restart the app after granting permissions
-
-### Hotkey doesn't work
+**Hotkey doesn't work**
 - Check that Input Monitoring permission is granted
-- Try a different hotkey combination
-- Ensure no other app is using the same hotkey
+- Try a different hotkey
+- Make sure no other app is capturing the same combination
 
-### App doesn't appear in menu bar
-- Check if the app is running in Terminal
-- Look for error messages in the console
-- Try restarting the app
+**App blocked by macOS (Gatekeeper)**
+- Right-click the app → Open → Open anyway
+- Or: `sudo xattr -rd com.apple.quarantine /Applications/Autoclicker.app`
 
-## 📝 Technical Details
+**`ModuleNotFoundError` during build**
+- Do not exclude `xml`, `html`, `http`, or `urllib` from PyInstaller — pyobjc uses them internally
+- Run `build.sh` which handles dependencies automatically
 
-### Built With
-- **PyObjC**: Python-Objective-C bridge for native macOS integration
-- **Cocoa Framework**: For UI components and menu bar integration
-- **Quartz**: For low-level mouse event simulation
-- **pynput**: For keyboard event listening and simulation
+## Technical Details
 
-### Architecture
-- Single-threaded event loop using NSRunLoop
-- Native NSPopover for the interface
-- CGEvent API for mouse simulation
-- Keyboard listener running in daemon thread
+- **PyObjC** — Python to Objective-C bridge for native macOS UI and system integration
+- **Cocoa / AppKit** — NSPopover, NSStatusBar, NSTimer, NSSegmentedControl
+- **Quartz / CGEvent** — Low-level mouse event simulation via `CGEventPost`
+- **pynput** — Global keyboard listener running in a daemon thread
+- **ctypes** — Direct calls to `AXIsProcessTrustedWithOptions` and `CFDictionaryCreate` without PyObjC (avoids segfault in PyInstaller bundles)
+- **PyInstaller `onedir` mode** — Keeps all dependencies inside the `.app` bundle, preventing the Python 3.13 Team ID mismatch error when extracting to `/tmp`
 
-## ⚠️ Disclaimer
+## Disclaimer
 
-This tool is intended for legitimate automation purposes only. Use responsibly and in accordance with the terms of service of any applications or games you use it with. The developer is not responsible for any misuse or violations of third-party terms of service.
+This tool is intended for legitimate automation purposes only. Use responsibly and in accordance with the terms of service of any applications you use it with. The developer is not responsible for any misuse.
 
-## 🤝 Contributing
+## License
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Author
-
-Created with ❤️ for the macOS community
-
-## 🙏 Acknowledgments
-
-- PyObjC community for excellent documentation
-- macOS developers for the robust frameworks
-- All contributors and users
-
----
-
-**Note**: This application requires macOS and will not work on Windows or Linux. For cross-platform alternatives, consider using other tools.
+MIT License — see the [LICENSE](LICENSE) file for details.

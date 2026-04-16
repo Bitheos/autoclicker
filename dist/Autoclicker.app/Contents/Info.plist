@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>icon.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>Autoclicker</string>
+	<string>com.personal.autoclicker</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -18,8 +18,16 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.15</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>NSAccessibilityUsageDescription</key>
+	<string>Autoclicker necesita Accesibilidad para controlar el mouse y el teclado.</string>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Autoclicker necesita Apple Events para detectar atajos de teclado.</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
 </dict>
